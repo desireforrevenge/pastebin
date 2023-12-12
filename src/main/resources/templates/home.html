@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{styles.css}">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <title>Pastebin</title>
+</head>
+<body>
+<!--<p th:text="|Привет, ${title}!|"></p>-->
+<div class="container">
+    <header>
+        <h1>Pastebin</h1>
+    </header>
+    <main>
+        <form th:action="@{/create}" method="post">
+            <label>
+                <textarea name="pasteInput" placeholder="Вставьте свой текст здесь"></textarea>
+            </label>
+            <button type="button" onclick="createPaste()">Создать</button>
+                <div id="pasteOutput">
+                    <p th:text="#{pasteInput}"></p>
+                </div>
+        </form>
+    </main>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script th:inline="javascript">
+        function createPaste() {
+            var inputText = $('textarea[name=pasteInput]').val();
+            $.post('/create', {pasteInput: inputText}, function(data) {
+                $('#pasteOutput').text(data);
+            });
+        }
+    </script>
+</body>
+</html>
